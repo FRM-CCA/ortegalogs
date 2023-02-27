@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<title>User ortega</title>
+	<!-- <style>
+		h1 {
+			text-align: left;
+			margin: auto;
+		}
+
+		table {
+			max-width: 20px;
+			border: 1px solid;
+			background-color: burlywood;
+		}
+
+		table th {
+			padding: 5px;
+			border: 1px solid;
+			background-color: rgb(253, 225, 189);
+			color: green;
+		}
+
+		table td {
+			padding: 5px;
+			border: 1px solid;
+			background-color: rgb(94, 72, 44);
+			color: whitesmoke;
+		}
+	</style> -->
+</head>
+
+<body>
+	<h1>TP Ortega Users</h1>
+	<table>
+		<tr>
+			<th>Id</th>
+			<th>Prenom</th>
+			<th>Nom</th>
+			<th>Age</th>
+			<th>Mail</th>
+			<th>Date</th>
+		</tr>
+		<tr>
+			<td>Ae</td>
+			<td>azeazezae</td>
+			<td>azeazeaez</td>
+			<td>azazeaze</td>
+			<td>azeaezaez</td>
+			<td>azzaaze</td>
+		</tr>
+	</table>
+	<article>
+		<label for="date">Date</label>
+		<input type="date" name="date" id="date" value="" readonly>
+	</article>
+	<button id="ExcludeIP"><a href="excludeIP.php">Exclude IP</a></button>
+	<button id="ClearForm">Clear</button>
+	<input type="hidden" name="toto" value="">
+</body>
+<script>
+	window.onload = function () {
+		let btnClear = document.getElementById("ClearForm");
+		btnClear.onclick = function () {
+			let selectTags = document.getElementsByTagName("select");
+			for (let i = 0; i < selectTags.length; i++) {
+				selectTags[i].selectedIndex = 0;
+			}
+			let selectText = document.querySelectorAll('input[type=text]');
+			for (let i = 0; i < selectText.length; i++) {
+				selectText[i].value = "";
+			}
+			document.forms[0].submit();
+		}
+	}
+</script>
+
+</html>

@@ -1,0 +1,85 @@
+body {
+	width:98%;
+}
+
+h1 {
+	text-align: left;
+	padding-left: 20px;
+	color: rgb(45, 161, 161);
+	margin: auto;
+}
+
+table {
+	width: 100%;
+	border-radius: 7px;
+	border: 1px solid;
+	background-color: burlywood;
+	font-weight: bolder;
+}
+
+table th {
+	padding: 5px;
+	border: 1px solid;
+	background-color: rgb(253, 225, 189);
+	color: rgb(167, 3, 3);
+}
+
+table td {
+	padding: 5px;
+	border: 1px solid;
+	color: black;
+}
+
+table tr:nth-child(even) {
+	background-color: rgb(214, 214, 214);
+}
+
+table tr:nth-child(odd) {
+	background-color: rgb(177, 177, 177);
+}
+
+section article {
+	margin-right: 10px ;
+	display: inline-block;
+}
+
+form fieldset, input, select{
+	margin-top: 5px;
+	border-radius: 4px;
+}
+
+button {
+	transition-duration: 0.4s;
+	border-radius: 4px;
+	background-color: #008CBA;
+	padding:5px;
+	border: 0;
+	margin-right: 2px;
+	color: white;
+}
+
+button:hover {
+  background-color: #00b2ee;
+  color: white;
+}
+
+button#ExcludeIP, #ClearForm {
+	float: right;
+}
+
+.btndelete{
+	background-color: red;
+}
+.btndelete:hover{
+	background-color: rgb(255, 102, 0);
+}
+
+.tdcenter td{
+	text-align:center;
+	vertical-align: middle;
+}
+
+a.link:link, a.link:visited, a.link:hover, a.link:active {
+  color: white;
+	text-decoration: none;
+}
