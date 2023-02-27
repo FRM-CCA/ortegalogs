@@ -16,9 +16,7 @@
                 <th>Delete<button id="ExcludeIP"><a class="link" href="excludeIPCRUD.php?param=create">Add IP</a></button></th>
 			</tr>
 <?php
-$dbCnx = "mysql:host=localhost;dbname=DbTrace";
-$user = "root"; //pour mon uwamp/xammp
-$pass = "root"; //pour xamp mettre vide ""
+require_once "inc/db.php";
 
 $nameId = $ip = $method = "";
 

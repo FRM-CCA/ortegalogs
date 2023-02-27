@@ -10,9 +10,7 @@
 <body>
 	<h1>TP Ortega Exclude IP CRUD</h1>
 <?php
-$dbCnx = "mysql:host=localhost;dbname=DbTrace";
-$user = "root"; //pour mon uwamp/xammp
-$pass = "root"; //pour xamp mettre vide ""
+require_once "inc/db.php";
 
 $id = $ip = $iddb = $ipdb = "";
 $method= $action = $query="";

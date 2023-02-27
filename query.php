@@ -21,9 +21,7 @@
 				<th>Page Name</th>
 			</tr>
 <?php
-$dbCnx = "mysql:host=localhost;dbname=DbTrace";
-$user = "root"; //pour mon uwamp/xammp
-$pass = "root"; //pour xamp mettre vide ""
+require_once "inc/db.php";
 
 $nameId= $pageId= $filter= $ip= $host= $date= $year= $month= $week= "";
 $yearm= $m= $yearw= $w= "";

@@ -1,0 +1,11 @@
+•	Pour un étudiant donné combien de connexions, au total, pour un jour, pour une semaine. -->OK
+•	Pour un étudiant donné combien de connexions pour chaque jour d'une semaine donnée, d'un mois. -->OK
+•	Fournir un classement des étudiants en fonction du nombre de connexions (jour, semaine, mois, au total) -->OK
+•	Pour un étudiant donné, lister les pages vues dans une semaine, dans le mois. -->OK
+•	Pour une page donnée, afficher la liste des étudiants ayant consulté la page, (dans la journée), (dans la semaine), le mois, au total. -->OK
+•	Pour un utilisateur, donner la liste des adresses I.P. en enlevant la/les adresse(s) IP voulues. -->OK
+•	pour un utilisateur donner la liste des dates, jour et heure de connexion avec la page consultée. -->OK
+•	Au lieu de créer un fichier de trace, nourrir directement la base de données.
+•	A partir d'une date combien de connexions pour un utilisateur.
+•	A partir d'une date donnée combien de connexions sur une page donnée.
+•	...
