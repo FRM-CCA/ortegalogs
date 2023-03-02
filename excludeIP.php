@@ -9,6 +9,27 @@
 </head>
 <body>
 	<h1>TP Ortega Exclude IP</h1>
+<?php
+$nameId = $ip = $method = $action= $retval="";
+    //RECUP PARAM=ACTION VIA GET OU POST
+    if(isset($_REQUEST["param"]) && !empty($_REQUEST["param"])){
+        $action = strtolower(trim($_REQUEST["param"]));
+    }
+    if(isset($_REQUEST["retval"]) && !empty($_REQUEST["retval"])){
+        $retval = strtolower(trim($_REQUEST["retval"]));
+    }
+    switch ($action) {
+        case 'deleteip':
+            echo "<h2>Vous venez d'effacer $retval IP</h2>";
+            break;
+        case 'createip':
+            echo "<h2>Vous venez d'ajouter $retval IP</h2>";
+            break;  
+        default:
+            # code...
+            break;
+    }
+?>
 		<table class="tdcenter">
 			<tr>
 				<th>Id</th>
@@ -17,8 +38,6 @@
 			</tr>
 <?php
 require_once "inc/db.php";
-
-$nameId = $ip = $method = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_REQUEST["nameid"])) {
@@ -37,8 +56,8 @@ try {
     foreach ($dbh->query($query) as $row) {
         //print_r($row);
         echo ("<tr>");
-        echo ("<td><a href='excludeIPCRUD.php?param=update&id=" . $row["id"] . "'>" . $row["id"] . "</a></td>");
-        echo ("<td><a href='excludeIPCRUD.php?param=update&id=" . $row["id"] . "'>" . $row["ip"] . "</a></td>");
+        echo ("<td>" . $row["id"] . "</a></td>");
+        echo ("<td>" . $row["ip"] . "</a></td>");
         echo ("<td><button class='btndelete'><a class='link' href='excludeIPCRUD.php?param=delete&id=" . $row["id"] . "'>X</a></button></td>");
         echo ("</tr>");
     }
@@ -49,6 +68,7 @@ try {
 }
 ?>
 		</table>
+        <button><a class="link" href="index.php">Goto to main Page</a></button>
 		<h4><?=$query?></h4>
 </body>
 </html>

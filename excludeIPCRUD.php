@@ -15,6 +15,11 @@ require_once "inc/db.php";
 $id = $ip = $iddb = $ipdb = "";
 $method= $action = $query="";
 
+//RECUP PARAM=ACTION VIA GET OU POST
+if(isset($_REQUEST["param"]) && !empty($_REQUEST["param"])){
+    $action = strtolower(trim($_REQUEST["param"]));
+}
+//RECUP PARAM VIA GET OU POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $method="POST";
     if (!empty($_POST["id"])) {
@@ -23,31 +28,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST["ip"])) {
         $ip = trim($_POST["ip"]);
     }
-    if (!empty($_POST["param"])) {
-        $action = strtolower(trim($_POST["param"]));
+    if(isset($_POST["action"]) && !empty($_POST["action"])){
+        $action = strtolower(trim($_REQUEST["action"]));
     }
 } else {
     $method="GET";
     if (!empty($_GET["id"])) {
         $id = trim($_GET["id"]);
     }
-    if(isset($_GET["param"]) && !empty($_GET["param"])){
-        $action = strtolower(trim($_GET["param"]));
-    }
 }
 
-if(isset($_REQUEST["param"]) && !empty($_REQUEST["param"])){
-    $action = strtolower(trim($_REQUEST["param"]));
-}
+//Gestion des actions
 switch ($action) {
     case 'create':
+        if($method=="POST"){
+            $dbh = new PDO($dbCnx, $user, $pass,
+                array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $query = "insert into excludeip (ip) values ('$ip')";
+            $count = $dbh->exec($query);
+            header("Location: excludeIP.php?param=createip&retval=$count");
+            exit();
+        }
         break;
-    case 'update':
-        break;
+    #case 'update':
+    #    break;
     case 'delete':
+        if($method=="POST"){
+            $dbh = new PDO($dbCnx, $user, $pass,
+                array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $query = "delete from excludeip where id=$id";
+            // order by ip";
+            $count = $dbh->exec($query);
+            header("Location: excludeIP.php?param=deleteip&retval=$count");
+            exit();
+        }
         break;
     default:
         $action="read";   //read
+        header("Location: excludeIP.php");
+        exit();
         break;
 }
 
@@ -67,14 +86,13 @@ switch ($action) {
         try {
             $dbh = new PDO($dbCnx, $user, $pass,
                 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-            $query = "select distinct ip FROM trace where ip not in (select ip from excludeip)";
-            // order by ip";
+            $query = "select distinct ip FROM trace where ip not in (select ip from excludeip) order by ip";
             foreach ($dbh->query($query) as $row) {
                 echo("<tr>");
                 echo("<td>".$row["ip"]."</td>");
                 echo("<td>");
                 echo("<form action='' method='POST'>");
-                echo("<input type='hidden' name='param' value='".$action."'>");
+                echo("<input type='hidden' name='action' value='".$action."'>");
                 echo("<input type='hidden' name='ip' value='".$row["ip"]."'>");
                 echo("<input type='submit' value='Add IP'>");
                 echo("</form>");
@@ -96,18 +114,18 @@ switch ($action) {
             $query = "insert into distinct ip FROM trace where ip not in (select ip from excludeip)";
         }
         break;
-    case "r":
-    case "u":
-    case "d":
+    case "read":
+    case "update":
+    case "delete":
         ?>
         <form action="" method="POST">
 		<fieldset>
-			<legend>Exclude IP</legend>
+			<legend>Remove Existante IP</legend>
         <?php
         try {
             $dbh = new PDO($dbCnx, $user, $pass,
                 array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-            $query = "SELECT id, ip FROM excludeip where id=$id order by ip";
+            $query = "SELECT id, ip FROM excludeip where id=$id";
             foreach ($dbh->query($query) as $row) {
                 $iddb = $row["id"];
                 $ipdb = $row["ip"];
@@ -118,8 +136,9 @@ switch ($action) {
             die();
         }
         ?>
-				<input type="text"  name="id" value="<?=$iddb?>" readonly>
-				<input type="text" name="ip" value="<?=$ipdb?>">
+                <input type="hidden" name="action" value="delete">
+				<input type="hidden" name="id" value="<?=$iddb?>">
+				<input type="text" name="ip" value="<?=$ipdb?>" readonly>
 				<input type="submit" value="Submit" />
 				<input type="reset" value="Reset" />
 			</section>

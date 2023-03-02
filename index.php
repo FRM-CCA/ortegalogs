@@ -86,6 +86,11 @@ try {
 			else
 				$filter .= " and t.host like '%$host%'";
     }
+		// NOT IN EXCLUDEIP
+		if(empty($filter))
+      	$filter .= " where t.ip not in (select ip from excludeip)";
+			else
+				$filter .= " and t.ip not in (select ip from excludeip)";
 		$query.=$filter; //idem=> $query= $query . $filter;
 
     foreach ($dbh->query($query) as $row) {
