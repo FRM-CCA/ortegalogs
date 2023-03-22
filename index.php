@@ -14,7 +14,8 @@
 				<th><a href="index.php?tri=Id&ordre=asc">Id</a></th>
 				<th><a href="index.php?tri=Ip&ordre=asc">Ip</a></th>
 				<th><a href="index.php?tri=Host&ordre=asc">Host</a></th>
-				<th><a href="index.php?tri=DateCnx&ordre=asc">Date Cnx</a></th>
+				<th><a href="index.php?tri=DateCnx&ordre=asc">Date Cnx DB</a></th>
+				<th><a href="index.php?tri=DateCnx&ordre=asc">Date Cnx fr</a></th>
 				<th>User Id</th>
 				<th>Page Id</th>
 				<th>Name/Login</th>
@@ -112,6 +113,8 @@ try {
         echo ("<td>" . $row["Ip"] . "</td>");
         echo ("<td>" . $row["Host"] . "</td>");
         echo ("<td>" . $row["DateCnx"] . "</td>");
+				$datetime = new DateTime($row["DateCnx"]);
+				echo ("<td>" . $datetime->format('d/m/Y H:i:s') . "</td>");
         echo ("<td>" . $row["UserId"] . "</td>");
         echo ("<td>" . $row["PageId"] . "</td>");
         echo ("<td>" . $row["Name"] . "</td>");
@@ -144,7 +147,6 @@ try {
             if ($nameId == $row["id"]) {
                 $selected = "selected";
             }
-
         }
         echo ('<option ' . $selected . ' value="' . $row["id"] . '">' . $row["Name"] . '</option>');
     }

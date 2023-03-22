@@ -23,12 +23,11 @@ try {
     echo $cpt . " : $host/$ip/$user/$page/$datetimef<br>";
     //Voilà on peut gérer le stockage des données
     if(insert2Db($host, $ip, $user, $page, $datetimef)){
-      echo $cpt." insert ok<br>";
+      echo "> ".$cpt." insert ok<br>";
     }
     else{
-      echo $cpt." insert ko<br>";
+      echo "> ".$cpt." insert ko<br>";
     }
-
    }
   }
   fclose($file);
@@ -130,7 +129,7 @@ function insert2Db($host, $ip, $user, $page, $datetime)
 
     //Table User
     if (trim($user) == ""){ //en sql pas de vide mais le mot "null" (ou empty($user))
-     $userId="null";
+     $userId=null;
     }
     else{
       $sql = "select Id from User where Name = :user";
@@ -153,22 +152,24 @@ function insert2Db($host, $ip, $user, $page, $datetime)
           //echo 'idUser:'.$userId;
         }
       }
-      //on a donc le userId
-      $sql = "INSERT INTO `trace`(`Ip`, `Host`, `DateCnx`, `UserId`, `PageId`) 
-        VALUES (:ip, :host, :datecnx, :userid, :pageid)";
-      $stmt = $conn->prepare($sql);
-      $stmt->bindValue(":ip", $ip, PDO::PARAM_STR);
-      $stmt->bindValue(":host", $host, PDO::PARAM_STR);
-      $stmt->bindValue(":datecnx", $datetime, PDO::PARAM_STR);
-      $stmt->bindValue(":userid", $userId, PDO::PARAM_INT);
-      $stmt->bindValue(":pageid", $pageId, PDO::PARAM_INT);
-      $result = $stmt->execute();
-      if($result){
-        $traceId = $conn->lastInsertId(); //INSERT
-        //echo 'idTrace:'.$traceId;
-      }
-      echo "### idTrace:".$traceId . " /idUser:".$userId . " /idPage:".$pageId."<br>";
     }
+    //on a donc le userId
+
+    //Table Trace
+    $sql = "INSERT INTO `trace`(`Ip`, `Host`, `DateCnx`, `UserId`, `PageId`) 
+        VALUES (:ip, :host, :datecnx, :userid, :pageid)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(":ip", $ip, PDO::PARAM_STR);
+    $stmt->bindValue(":host", $host, PDO::PARAM_STR);
+    $stmt->bindValue(":datecnx", $datetime, PDO::PARAM_STR);
+    $stmt->bindValue(":userid", $userId); //ici pas de type car peut etre null
+    $stmt->bindValue(":pageid", $pageId, PDO::PARAM_INT);
+    $result = $stmt->execute();
+    if($result){
+      $traceId = $conn->lastInsertId(); //INSERT
+      //echo 'idTrace:'.$traceId;
+    }
+    echo "### idTrace:".$traceId . " /idUser:".$userId . " /idPage:".$pageId."<br>";
   } catch (PDOException $e) {
    echo $sql . "<br>" . $e->getMessage();
    return false;

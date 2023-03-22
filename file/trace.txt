@@ -1,6 +1,6 @@
  - Client = 91-168-93-143.subs.proxad.net - IP = 91.168.93.143 - FormateurWiki - PagePrincipale - Nous sommes le 07-01-2023 et il est 20:09
 -----------------------------------
- - Client = 91-168-93-143.subs.proxad.net - IP = 91.168.93.143 - FormateurWiki - PagePrincipale - Nous sommes le 07-01-2023 et il est 20:09
+ - Client = 91-168-93-143.subs.proxad.net - IP = 91.168.93.143 -  - PagePrincipale - Nous sommes le 07-01-2023 et il est 20:09
 -----------------------------------
  - Client = 91-168-93-143.subs.proxad.net - IP = 91.168.93.143 - FormateurWiki - Bts1BEvaluationsMe - Nous sommes le 07-01-2023 et il est 20:13
 -----------------------------------
