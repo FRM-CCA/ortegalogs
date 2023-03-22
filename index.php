@@ -192,7 +192,7 @@ try {
 try {
     $dbh = new PDO($dbCnx, $user, $pass,
         array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-    foreach ($dbh->query('SELECT distinct ip from trace order by ip') as $row) {
+    foreach ($dbh->query('SELECT distinct ip from trace order by CAST(left(ip, POSITION("." IN ip)-1) AS SIGNED), ip;') as $row) {
         //print_r($row);
         $selected = "";
         if (!empty($ip)) {
