@@ -11,10 +11,10 @@
 	<h1>TP Ortega Users</h1>
 		<table>
 			<tr>
-				<th>Id</th>
-				<th>Ip</th>
-				<th>Host</th>
-				<th>Date Cnx</th>
+				<th><a href="index.php?tri=Id&ordre=asc">Id</a></th>
+				<th><a href="index.php?tri=Ip&ordre=asc">Ip</a></th>
+				<th><a href="index.php?tri=Host&ordre=asc">Host</a></th>
+				<th><a href="index.php?tri=DateCnx&ordre=asc">Date Cnx</a></th>
 				<th>User Id</th>
 				<th>Page Id</th>
 				<th>Name/Login</th>
@@ -28,6 +28,17 @@
 require_once "inc/db.php";
 
 $nameId = $pageId = $filter= $ip= $host = $date = "";
+$orderby = $tri=$ordre="";
+
+if (!empty($_REQUEST["tri"])) {
+	$tri = trim($_REQUEST["tri"]);
+}
+if (!empty($_REQUEST["ordre"])) {
+	$ordre = trim($_REQUEST["ordre"]);
+}
+//var_dump($tri, $ordre);
+if(!empty($tri))
+	$orderby= " order by ". $tri . " " . $ordre;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (!empty($_REQUEST["nameid"])) {
@@ -92,7 +103,8 @@ try {
 			else
 				$filter .= " and t.ip not in (select ip from excludeip)";
 		$query.=$filter; //idem=> $query= $query . $filter;
-
+		$query.=$orderby;
+//var_dump($query);
     foreach ($dbh->query($query) as $row) {
         //print_r($row);
         echo ("<tr>");
