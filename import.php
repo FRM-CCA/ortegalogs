@@ -110,7 +110,7 @@ function decoupage($line, $cpt)
 {
  global $host, $ip, $user, $page, $datetimef;
  //on ne traite pas que la ligne voulu
- if (str_starts_with($line, " - Client =")) {
+ if (str_starts_with($line, " - Client =")) { //ou str_contains en php7
   $tabline = explode("- ", $line);
   $host = trim(str_replace("Client = ", "", $tabline[1]));
   $ip = trim(str_replace("IP = ", "", $tabline[2]));
