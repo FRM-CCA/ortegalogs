@@ -16,6 +16,8 @@ try {
 	$conn = null;
 }
 
+//TODO A VIRER
+
 if($conn != null){
 	//ACTION QUERY INSERT/UPDATE/DELETE
 	$ip="55.55.555.555555555";
