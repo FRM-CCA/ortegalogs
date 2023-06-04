@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<form action="" method="post" id="frm">
+		<article>
+			<input type="hidden" name="nameid" id="nameid" value="" />
+			<label for="nameuser">Nom</label>
+			<input list="userList" name="nameuser" id="nameuser" value="" />
+			<datalist id="userList">
+				<option label="All Users" data-id="-1" value="(All)">
+				<option label="" data-id="109" value="AbdouAliBts">
+				<option label="" data-id="106" value="AnessErradi">
+				<option label="" data-id="92" value="EmanuelLuzard">
+				<option label="" data-id="88" value="FormateurWiki">
+				<option label="" data-id="91" value="HoanganhLuong">
+				<option label="" data-id="99" value="IanAouchiche">
+				<option label="" data-id="100" value="IlyesGhouas">
+				<option label="" data-id="108" value="IlyesIberrahen">
+				<option label="" data-id="93" value="JanyDaveiga">
+				<option label="" data-id="103" value="JoaoLazaro">
+				<option label="" data-id="96" value="KevinGiang">
+				<option label="" data-id="89" value="KevinRodrigues">
+				<option label="" data-id="105" value="KobiganKiru">
+				<option label="" data-id="101" value="LoicValadier">
+				<option label="" data-id="94" value="MarcLinBts">
+				<option label="" data-id="102" value="MoussaDiakite">
+				<option label="" data-id="90" value="PorhuyeYang">
+				<option label="" data-id="104" value="SenthoThayaparan">
+				<option label="" data-id="107" value="SofianePhiletas">
+				<option label="" data-id="97" value="ThibaultLefay">
+				<option label="" data-id="98" value="YanisLaldji">
+				<option label="" data-id="95" value="YoannMercier">
+			</datalist>
+		</article>
+		<article>
+			<label for="pageid">Page</label>
+			<!-- <select name="pageid" id="pageid"> -->
+			<input list="userPage" name="pageid" id="pageid" value="" />
+				<datalist id="userPage">
+					<option value="-1">(All)</option>
+					<option value="173">Bts1BEvalAbdouAliBtsMe</option>
+					<option value="174">Bts1BEvalAnessErradiMe</option>
+					<option value="164">Bts1BEvalEmanuelLuzardMe</option>
+					<option value="163">Bts1BEvalHoanganhLuongMe</option>
+					<option value="180">Bts1BEvalIanAouchicheMe</option>
+					<option value="179">Bts1BEvalIlyesIberrahenMe</option>
+					<option value="170">Bts1BEvalJanyDaveigaMe</option>
+					<option value="172">Bts1BEvalJoaoLazaroMe</option>
+					<option value="175">Bts1BEvalKevinGiangMe</option>
+					<option value="166">Bts1BEvalKevinRodriguesMe</option>
+					<option value="171">Bts1BEvalKobiganKiruMe</option>
+					<option value="167">Bts1BEvalLoicValadierMe</option>
+					<option value="176">Bts1BEvalMarcLinBtsMe</option>
+					<option value="181">Bts1BEvalMoussaDiakiteMe</option>
+					<option value="168">Bts1BEvalPorhuyeYangMe</option>
+					<option value="178">Bts1BEvalSenthoThayaparanMe</option>
+					<option value="177">Bts1BEvalSofianePhiletasMe</option>
+					<option value="162">Bts1BEvalThibaultLefayMe</option>
+					<option value="159">Bts1BEvaluationsMe</option>
+					<option value="169">Bts1BEvalYanisLaldjiMe</option>
+					<option value="165">Bts1BEvalYoannMercierMe</option>
+					<option value="160">EvaluationIanAouchiche</option>
+					<option value="161">EvaluationMoussaDiakite</option>
+					<option value="182">LesSitesClasseDeBts1B</option>
+					<option value="185">Lrd23SioB01.Me</option>
+					<option value="191">Lrd23SioB01Me_CDT</option>
+					<option value="186">Lrd23SioB02.Me</option>
+					<option value="190">Lrd23SioB02Me</option>
+					<option value="192">Lrd23SioB02Me_CDT</option>
+					<option value="187">Lrd23SioB03.Me_cours_objet</option>
+					<option value="188">Lrd23SioB03Me_cours_objet</option>
+					<option value="193">Lrd23SioB03Me_cours_objet_CDT</option>
+					<option value="189">Lrd23SioB04Me_cours_objet</option>
+					<option value="194">Lrd23SioB04Me_cours_objet_CDT</option>
+					<option value="195">Lrd23SioB05Me_cours_objet_CDT</option>
+					<option value="196">Lrd23SioB06Me_cours_objet_CDT</option>
+					<option value="197">Lrd23SioB07Me_cours_objet_CDT</option>
+					<option value="183">Lrd23SioBMe</option>
+					<option value="184">Lrd23SioBMeCahierDeTextes</option>
+					<option value="198">Lrd23SioBMe_Sommaire_CahierDeTextes</option>
+					<option value="158">PagePrincipale</option>
+				</datalist>
+			<!-- </select> -->
+		</article>
+	</form>
+	<script>
+		async function showPages(id) {
+			// lire notre JSON
+			let pages;
+			try {
+				let response = await fetch('API/selectpage.php?userid='+id);
+				pages = await response.json();
+				//console.log(pages);
+				//let pages = await response.body;
+			} catch(err) {
+				alert(err); // TypeError: failed to fetch
+			}
+			return pages;
+		}
+
+		//https://keyjs.dev/
+		//https://fr.javascript.info/async-await
+		function doKeyUp(e) {
+			//console.log(e);
+			//if (e.preventDefault) { e.preventDefault(); }
+			if (e.key == "ArrowLeft" || e.key == "ArrowRight" || e.key == "ArrowUp" || e.key == "ArrowDown") { return; }	//on vire les fleches
+			//if (e.key !== "Tab" || e.key !== "Enter") {
+				if (e.key < "a" || e.key > "z") { return; }	//ICI A-Z
+			//}
+			//let key = "" + e.key;
+			//let code = "" + e.code;
+			let search_after = nameuser.value.trim();
+			let datalist = document.querySelector("datalist#userList");
+			//console.log(search_after + " " + key + " " + code);
+			// getElementsByTagName('datalist')[0];
+			if (search_after.length >1) {
+				console.log("->" + search_after);
+				let dataid=null;
+				try {
+					dataid = document.querySelector("datalist#userList option[value='"+search_after+"']").attributes["data-id"];
+				} catch (error) {
+					dataid=null;
+				}
+				if(dataid!=null && parseInt(dataid.value) > 0){
+					document.getElementById("nameid").value = dataid.value;
+					let datas = showPages(dataid.value);
+					datas.then(pagesUser => {
+						//alert(`Full name: ${pagesUser}.`);
+						console.log(pagesUser);
+						if(pagesUser.length>0){
+							//const firstElement = pagesUser[0];
+							const firstElement = pagesUser.shift();
+							if(firstElement["state"]=='OK'){
+								// for (let index = 1; index < pagesUser.length; index++) {
+								// 	const element = pagesUser[index];
+								// 	console.log(element["pageId"] + "/" + element["pageName"]);
+								// 	let options = element.map(o => `<option label="" data-id="${o.pageId}" value="${o.pageName}">`);
+								// 	document.getElementById("pageid").append(options);
+								// }
+								let parentDatalist = document.getElementById("userPage");
+								let childArray = parentDatalist.children;
+								//let childArray = document.getElementById("userPage").children;
+								var cL = childArray.length;
+								console.log(cL);
+        				while(cL > 0) {
+            			cL--;
+            			parentDatalist.removeChild(childArray[cL]);
+								}
+								let options = pagesUser.map(o => `<option label="" data-id="${o.pageId}" value="${o.pageName}">`);
+								console.log(options);
+								//parentDatalist.append(options);
+								console.log(parentDatalist);
+								parentDatalist.innerHTML=options;
+								console.log(parentDatalist.innerHTML);
+							}
+						}
+					});
+				}
+				//document.getElementById("search").submit();
+			}
+		}
+		document.addEventListener("DOMContentLoaded", function (event) {
+			//ICI APRES CHARGEMENT DE LA PAGE COMPLET
+			//ICI AJAX FIELDS INIT
+			document.getElementById("frm").onsubmit = function (e) {
+				console.log("SUBMIT CANCEL");
+				return false;
+			}
+
+			let form = document.getElementsByTagName("form")[0];
+			let nameuser = document.getElementById("nameuser");
+			nameuser.addEventListener("keyup", doKeyUp, true);
+
+			//ICI Code pour reinitialiser les champs du formulaires
+			let btnClear = document.getElementById("ClearForm");
+			btnClear.onclick = function () {
+			let selectTags = document.getElementsByTagName("select");
+			for (let i = 0; i < selectTags.length; i++) {
+				selectTags[i].selectedIndex = 0;
+			}
+			let selectText = document.querySelectorAll('input[type=text]');
+			for (let i = 0; i < selectText.length; i++) {
+				selectText[i].value = "";
+			}
+			let selectDate = document.querySelectorAll('input[type=date]');
+			for (let i = 0; i < selectDate.length; i++) {
+				selectDate[i].value = "";
+			}
+			document.forms[0].submit();
+		}
+		});
+	</script>
+</body>
+
+</html>

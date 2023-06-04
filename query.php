@@ -23,6 +23,7 @@
 <?php
 require_once "inc/db.php";
 
+$bAffich=false;
 $nameId= $pageId= $filter= $ip= $host= $date= $year= $month= $week= "";
 $yearm= $m= $yearw= $w= "";
 
@@ -243,7 +244,7 @@ else{
 					//print_r($row);
 					echo "<td>".$row["cnt"]."</td>";
 			}
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -273,7 +274,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($date)){
 					//print_r($row);
 					echo "<td>".$row["cnt"]."</td>";
 			}
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -303,7 +304,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($date)){
 					//print_r($row);
 					echo "<td>".$row["cnt"]." (Semaine:". $row["dt"] . ")</td>";
 			}
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -336,7 +337,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($week)){
 					echo "<tr><td>".$row["cnt"]."-Date:".$row["dt"]."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -369,7 +370,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($month)){
 					echo "<tr><td>".$row["cnt"]."-Date:".$row["dt"]."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -397,7 +398,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($month)){
 					echo "<tr><td>".$row["cnt"]."-User:".$row["Name"]."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -424,7 +425,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($month)){
 					echo "<tr><td>".$row["cnt"]."-Date=".$row["dt"]."-User:".$row["Name"]."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -451,7 +452,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($month)){
 					echo "<tr><td>".$row["cnt"]."-Date=".$row["dt"]."-User:".$row["Name"]."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -478,7 +479,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($month)){
 					echo "<tr><td>".$row["cnt"]."-Date=".$row["dt"]."-User:".$row["Name"]."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -511,7 +512,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($w)){
 					echo "<tr><td>".$row["Page"].""."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -545,7 +546,7 @@ elseif((empty($nameId) || (int) ($nameId) < 0) && empty($m)){
 					echo "<tr><td>".$row["Page"].""."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -577,7 +578,7 @@ else{
 					echo "<tr><td>".$row["name"].""."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -611,7 +612,7 @@ elseif((empty($pageId) || (int) ($pageId) < 0) && empty($m)){
 					echo "<tr><td>".$row["name"].""."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";
@@ -642,7 +643,7 @@ else{
 					echo "<tr><td>".$row["IP"].""."</td></tr>";
 			}
 			echo "</table></td>";
-			echo "<td>".$query."</td>";
+			if($bAffich) echo "<td>".$query."</td>";
 			$dbh = null;
 	} catch (PDOException $e) {
 			print "Erreur !: " . $e->getMessage() . "<br/>";

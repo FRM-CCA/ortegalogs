@@ -1,3 +1,6 @@
+<?php
+require_once "inc/cache_clear.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,18 +12,7 @@
 </head>
 <body>
 	<h1>TP Ortega Users</h1>
-		<table>
-			<tr>
-				<th><a href="index.php?tri=Id&ordre=asc">Id</a></th>
-				<th><a href="index.php?tri=Ip&ordre=asc">Ip</a></th>
-				<th><a href="index.php?tri=Host&ordre=asc">Host</a></th>
-				<th><a href="index.php?tri=DateCnx&ordre=asc">Date Cnx DB</a></th>
-				<th><a href="index.php?tri=DateCnx&ordre=asc">Date Cnx fr</a></th>
-				<th>User Id</th>
-				<th>Page Id</th>
-				<th>Name/Login</th>
-				<th>Page Name</th>
-			</tr>
+	<button><a class="link" href="indexajax.php">Ajax version</a></button>
 <?php
 # $dbCnx = "mysql:host=localhost;dbname=DbTrace";
 # $user = "root"; //pour mon uwamp/xammp
@@ -29,7 +21,7 @@
 require_once "inc/db.php";
 
 $nameId = $pageId = $filter= $ip= $host = $date = "";
-$orderby = $tri=$ordre="";
+$query= $orderby = $tri=$ordre="";
 
 if (!empty($_REQUEST["tri"])) {
 	$tri = trim($_REQUEST["tri"]);
@@ -59,75 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		//var_dump($date);
 	}
 }
-
-try {
-    $dbh = new PDO($dbCnx, $user, $pass,
-        array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-    $query = "SELECT t.*, u.Name, p.Page FROM trace as t
-				inner join page as p on p.Id = t.PageId
-				left join user as u on u.Id = t.UserId";
-		// Gestion des filtres
-    if (!empty($nameId) && (int) ($nameId) > 0) {
-      $filter .= " where u.id =" . $nameId;
-    }
-		if (!empty($pageId) && (int) ($pageId) > 0) {
-			if(empty($filter))
-      	$filter .= " where p.id =" . $pageId;
-			else
-				$filter .= " and p.id =" . $pageId;
-    }
-		if (!empty($ip) && (int) ($ip) > 0) {
-			if(empty($filter))
-      	$filter .= " where t.ip = '$ip'";
-			else
-				$filter .= " and t.ip = '$ip'";
-    }
-		if (!empty($date)) {
-			$date=htmlspecialchars($date);
-			if(empty($filter))
-				$filter .= " where t.datecnx BETWEEN '$date 00:00:00' and '$date 23:59:59'" ;
-      	//$filter .= " where date(t.datecnx) = '$date'";
-			else
-				$filter .= " and t.datecnx BETWEEN '$date 00:00:00' and '$date 23:59:59'";
-				//$filter .= " and date(t.datecnx) = '$date'";
-    }
-		if (!empty($host)) {
-			$host=htmlspecialchars($host);
-			if(empty($filter))
-      	$filter .= " where t.host like '%$host%'";
-			else
-				$filter .= " and t.host like '%$host%'";
-    }
-		// NOT IN EXCLUDEIP
-		if(empty($filter))
-      	$filter .= " where t.ip not in (select ip from excludeip)";
-			else
-				$filter .= " and t.ip not in (select ip from excludeip)";
-		$query.=$filter; //idem=> $query= $query . $filter;
-		$query.=$orderby;
-//var_dump($query);
-    foreach ($dbh->query($query) as $row) {
-        //print_r($row);
-        echo ("<tr>");
-        echo ("<td>" . $row["Id"] . "</td>");
-        echo ("<td>" . $row["Ip"] . "</td>");
-        echo ("<td>" . $row["Host"] . "</td>");
-        echo ("<td>" . $row["DateCnx"] . "</td>");
-				$datetime = new DateTime($row["DateCnx"]);
-				echo ("<td>" . $datetime->format('d/m/Y H:i:s') . "</td>");
-        echo ("<td>" . $row["UserId"] . "</td>");
-        echo ("<td>" . $row["PageId"] . "</td>");
-        echo ("<td>" . $row["Name"] . "</td>");
-        echo ("<td>" . $row["Page"] . "</td>");
-        echo ("</tr>");
-    }
-    $dbh = null;
-} catch (PDOException $e) {
-    print "Erreur !: " . $e->getMessage() . "<br/>";
-    die();
-}
 ?>
-		</table>
 		<form action="" method="POST">
 			<fieldset>
 			<legend>Filtres</legend>
@@ -227,6 +151,87 @@ try {
 			</fieldset>
 		</form>
 		<h4><?= $query?></h4>
+		<table>
+			<tr>
+				<th><a href="index.php?tri=Id&ordre=asc">Id</a></th>
+				<th><a href="index.php?tri=Ip&ordre=asc">Ip</a></th>
+				<th><a href="index.php?tri=Host&ordre=asc">Host</a></th>
+				<th><a href="index.php?tri=DateCnx&ordre=asc">Date Cnx DB</a></th>
+				<th><a href="index.php?tri=DateCnx&ordre=asc">Date Cnx fr</a></th>
+				<th>User Id</th>
+				<th>Page Id</th>
+				<th>Name/Login</th>
+				<th>Page Name</th>
+			</tr>
+<?php
+		try {
+    $dbh = new PDO($dbCnx, $user, $pass,
+        array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+    $query = "SELECT t.*, u.Name, p.Page FROM trace as t
+				inner join page as p on p.Id = t.PageId
+				left join user as u on u.Id = t.UserId";
+		// Gestion des filtres
+    if (!empty($nameId) && (int) ($nameId) > 0) {
+      $filter .= " where u.id =" . $nameId;
+    }
+		if (!empty($pageId) && (int) ($pageId) > 0) {
+			if(empty($filter))
+      	$filter .= " where p.id =" . $pageId;
+			else
+				$filter .= " and p.id =" . $pageId;
+    }
+		if (!empty($ip) && (int) ($ip) > 0) {
+			if(empty($filter))
+      	$filter .= " where t.ip = '$ip'";
+			else
+				$filter .= " and t.ip = '$ip'";
+    }
+		if (!empty($date)) {
+			$date=htmlspecialchars($date);
+			if(empty($filter))
+				$filter .= " where t.datecnx BETWEEN '$date 00:00:00' and '$date 23:59:59'" ;
+      	//$filter .= " where date(t.datecnx) = '$date'";
+			else
+				$filter .= " and t.datecnx BETWEEN '$date 00:00:00' and '$date 23:59:59'";
+				//$filter .= " and date(t.datecnx) = '$date'";
+    }
+		if (!empty($host)) {
+			$host=htmlspecialchars($host);
+			if(empty($filter))
+      	$filter .= " where t.host like '%$host%'";
+			else
+				$filter .= " and t.host like '%$host%'";
+    }
+		// NOT IN EXCLUDEIP
+		if(empty($filter))
+      	$filter .= " where t.ip not in (select ip from excludeip)";
+			else
+				$filter .= " and t.ip not in (select ip from excludeip)";
+		$query.=$filter; //idem=> $query= $query . $filter;
+		$query.=$orderby;
+//var_dump($query);
+    foreach ($dbh->query($query) as $row) {
+        //print_r($row);
+        echo ("<tr>");
+        echo ("<td>" . $row["Id"] . "</td>");
+        echo ("<td>" . $row["Ip"] . "</td>");
+        echo ("<td>" . $row["Host"] . "</td>");
+        echo ("<td>" . $row["DateCnx"] . "</td>");
+				$datetime = new DateTime($row["DateCnx"]);
+				echo ("<td>" . $datetime->format('d/m/Y H:i:s') . "</td>");
+        echo ("<td>" . $row["UserId"] . "</td>");
+        echo ("<td>" . $row["PageId"] . "</td>");
+        echo ("<td>" . $row["Name"] . "</td>");
+        echo ("<td>" . $row["Page"] . "</td>");
+        echo ("</tr>");
+    }
+    $dbh = null;
+} catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+}
+?>
+		</table>
 	<script>
 		window.onload = function () {
 			let btnClear = document.getElementById("ClearForm");
